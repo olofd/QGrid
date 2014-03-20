@@ -1,0 +1,6 @@
+C:\Proj\QGrid\obj\Debug\QGridJS.csprojResolveAssemblyReference.cache
+C:\Proj\QGrid\bin\QGridJS.dll.config
+C:\Proj\QGrid\bin\QGridJS.dll
+C:\Proj\QGrid\bin\QGridJS.pdb
+C:\Proj\QGrid\obj\Debug\QGridJS.dll
+C:\Proj\QGrid\obj\Debug\QGridJS.pdb

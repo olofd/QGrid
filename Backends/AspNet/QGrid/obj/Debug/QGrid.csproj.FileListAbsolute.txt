@@ -1,0 +1,12 @@
+C:\Proj\QGrid\Backends\AspNet\QGrid\obj\Debug\QGrid.csprojResolveAssemblyReference.cache
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\QGrid.dll.config
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\QGrid.dll
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\QGrid.pdb
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\EntityFramework.dll
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\EntityFramework.SqlServer.dll
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\itextsharp.dll
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\EntityFramework.xml
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\EntityFramework.SqlServer.xml
+C:\Proj\QGrid\Backends\AspNet\QGrid\bin\Debug\itextsharp.xml
+C:\Proj\QGrid\Backends\AspNet\QGrid\obj\Debug\QGrid.dll
+C:\Proj\QGrid\Backends\AspNet\QGrid\obj\Debug\QGrid.pdb

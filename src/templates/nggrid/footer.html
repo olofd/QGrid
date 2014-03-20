@@ -1,0 +1,93 @@
+﻿<div ng-show="showFooter" class="qgrid-footer" ng-style="footerStyle()">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <span class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="$parent.$parent.qGrid.qGridSettings.resetGrid()">
+                        <span class="fa fa-refresh"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-if="$parent.$parent.qGrid.qGridSettings.enableFooterSettings">
+                        <i class="fa fa-cogs"></i>
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enableExcelExport">
+                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('Excel')">Export to Excel</a>
+                        </li>
+                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enablePDFExport">
+                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('PDF')">Export to PDF</a>
+                        </li>
+                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enableCSVExport">
+                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('CSV')">Export to CSV</a>
+                        </li>
+                        <li ng-repeat="footerFunction in $parent.$parent.qGrid.qGridSettings.footerActions">
+                            <a href="#" ng-click="footerFunction.callback(footerFunction, $parent.$parent.qGrid)">
+                                {{footerFunction.title}}
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+
+
+            </div>
+            <div class="col-xs-6" style="text-align:center;">
+                <div class="btn-group">
+                    <button ng-click="pageToFirst()" ng-disabled="cantPageBackward()" type="button" class="btn btn-default btn-sm">
+                        <i class="fa fa-step-backward qgrid-pager-button"></i>
+                    </button>
+                    <button ng-click="pageBackward()" ng-disabled="cantPageBackward()" type="button" class="btn btn-default btn-sm" style="border-right:none !important;">
+                        <i class="fa fa-chevron-left qgrid-pager-button"></i>
+                    </button>
+                    <span class="qgrid-pager-input">
+                        <input class="ngPagerCurrent" min="1" max="{{currentMaxPages}}" type="number" style="width:49px; height: 30px;" ng-model="pagingOptions.currentPage" ng-disabled="$parent.$parent.qGrid.qGridSettings.isLoading" />
+                    </span>
+                    <button ng-click="pageForward()" ng-disabled="cantPageForward()" type="button" class="btn btn-default btn-sm" style="border-left:none !important;">
+                        <i class="fa fa-chevron-right qgrid-pager-button"></i>
+                    </button>
+                    <button ng-click="pageToLast()" ng-disabled="cantPageToLast()" type="button" class="btn btn-default btn-sm">
+                        <i class="fa fa-step-forward qgrid-pager-button"></i>
+                    </button>
+
+
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                        {{pagingOptions.pageSize}} rows
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li ng-repeat="size in pagingOptions.pageSizes" ng-click="pagingOptions.pageSize = size;">
+                            <a href="#">{{size}} rows</a>
+
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-xs-3">
+
+                <div class="qgrid-pager-container">
+
+                    <span>
+                        <span class="ngFooterTotalItems" ng-class="{'ngNoMultiSelect': !multiSelect}">
+                            <span class="qgrid-label">
+                                {{maxRows()}} rows total
+                            </span>
+                            <span ng-show="filterText.length > 0" class="ngLabel">
+                                ({{i18n.ngShowingItemsLabel}} {{totalFilteredItemsLength()}})
+                            </span>
+                        </span>
+                        <span class="ngFooterSelectedItems" ng-show="multiSelect">
+                            <span class="qgrid-label">
+                                {{i18n.ngSelectedItemsLabel}} {{selectedItems.length}}
+                            </span>
+                        </span>
+
+                    </span>
+                    <span tooltip-placement="right" tooltip="I spin when the grid is loading!">
+                        <i class="qgrid-spinner fa fa-cog" ng-class="{'fa-spin' : $parent.$parent.qGrid.qGridSettings.isLoading}"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
