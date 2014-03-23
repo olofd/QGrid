@@ -58,6 +58,19 @@ declare module qgrid {
     }
 }
 declare module qgrid {
+    interface IQgridOperations {
+        performSearch: (gridModel: IQgridModel<any>) => any;
+        resetGrid: (gridModel: IQgridModel<any>) => any;
+        onSort: (newVal: ISortInfo, oldVal: ISortInfo, gridModel: IQgridModel<any>) => any;
+        onPaging: (newVal: IPagingOptions, oldVal: IPagingOptions, gridModel: IQgridModel<any>) => any;
+        autoComplete: (col: IColumn, gridModel: IQgridModel<any>) => any;
+        exportGrid: (type: any, gridModel: IQgridModel<any>) => any;
+        requestData: (searchObject: IServerRequestObject, gridModel: IQgridModel<any>) => ng.IHttpPromise<any[]>;
+        loadGrid: (gridModel: IQgridModel<any>) => ng.IPromise<any>;
+        buildServerRequestObject: (gridModel: IQgridModel<any>) => IServerRequestObject;
+    }
+}
+declare module qgrid {
     interface IQgridCellFormatter {
         template: string;
     }
@@ -136,15 +149,8 @@ declare module qgrid {
 }
 declare module qgrid {
     interface IQgridService {
-        performSearch: (gridModel: IQgridModel<any>) => any;
-        resetGrid: (gridModel: IQgridModel<any>) => any;
-        onSort: (newVal: ISortInfo, oldVal: ISortInfo, gridModel: IQgridModel<any>) => any;
-        onPaging: (newVal: IPagingOptions, oldVal: IPagingOptions, gridModel: IQgridModel<any>) => any;
-        autoComplete: (col: IColumn, gridModel: IQgridModel<any>) => any;
-        exportGrid: (type: any, gridModel: IQgridModel<any>) => any;
-        requestData: (searchObject: IServerRequestObject, gridModel: IQgridModel<any>) => ng.IHttpPromise<any[]>;
-        loadGrid: (gridModel: IQgridModel<any>) => ng.IPromise<any>;
-        buildServerRequestObject: (gridModel: IQgridModel<any>) => IServerRequestObject;
+        createGrid<T>($scope: IQgridScope<T>): void;
+        qgridOperations: IQgridOperations;
     }
 }
 declare module qgrid {
@@ -249,6 +255,25 @@ declare module qgrid {
     }
 }
 declare module qgrid {
+    class QGridOperations implements IQgridOperations {
+        private $http;
+        private $q;
+        private $timeout;
+        private qgridServverRequestBuilder;
+        static $inject: string[];
+        constructor($http: ng.IHttpService, $q: ng.IQService, $timeout: ng.ITimeoutService, qgridServverRequestBuilder: ServerRequestBuilder);
+        public buildServerRequestObject(gridModel: IQgridModel<any>): IServerRequestObject;
+        public performSearch(gridModel: IQgridModel<any>): ng.IPromise<{}>;
+        public requestData(searchObject: IServerRequestObject, gridModel: IQgridModel<any>): ng.IHttpPromise<any>;
+        public loadGrid<T>(gridModel: IQgridModel<T>): ng.IPromise<{}>;
+        public onSort(newVal: ISortInfo, oldVal: ISortInfo, gridModel: IQgridModel<any>): ng.IPromise<{}>;
+        public onPaging(newVal: IPagingOptions, oldVal: IPagingOptions, gridModel: IQgridModel<any>): ng.IPromise<{}>;
+        public autoComplete(val: any, gridModel: IQgridModel<any>): ng.IPromise<any>;
+        public exportGrid(type: any, gridModel: IQgridModel<any>): void;
+        public resetGrid(gridModel: IQgridModel<any>): ng.IPromise<{}>;
+    }
+}
+declare module qgrid {
     class ServerRequestBuilder implements IServerRequestBuilder {
         private $http;
         private $q;
@@ -267,26 +292,13 @@ declare module qgrid {
 }
 declare module qgrid {
     class GridService implements IQgridService {
-        private $http;
-        private $q;
-        private $timeout;
-        private $interval;
         private qgridExtender;
-        private qgridServverRequestBuilder;
         private qgridDefaultQgridModel;
         private qgridDefaultQgridSettings;
+        public qgridOperations: IQgridOperations;
         static $inject: string[];
-        constructor($http: ng.IHttpService, $q: ng.IQService, $timeout: ng.ITimeoutService, $interval: ng.IIntervalService, qgridExtender: IQgridExtender, qgridServverRequestBuilder: ServerRequestBuilder, qgridDefaultQgridModel: IDefaultModelGetter, qgridDefaultQgridSettings: IDefaultModelGetter);
+        constructor(qgridExtender: IQgridExtender, qgridDefaultQgridModel: IDefaultModelGetter, qgridDefaultQgridSettings: IDefaultModelGetter, qgridOperations: IQgridOperations);
         public createGrid<T>($scope: IQgridScope<T>): void;
         private setupGrid<T>(userGridModel);
-        public buildServerRequestObject(gridModel: IQgridModel<any>): IServerRequestObject;
-        public performSearch(gridModel: IQgridModel<any>): ng.IPromise<{}>;
-        public requestData(searchObject: IServerRequestObject, gridModel: IQgridModel<any>): ng.IHttpPromise<any>;
-        public loadGrid<T>(gridModel: IQgridModel<T>): ng.IPromise<{}>;
-        public onSort(newVal: ISortInfo, oldVal: ISortInfo, gridModel: IQgridModel<any>): ng.IPromise<{}>;
-        public onPaging(newVal: IPagingOptions, oldVal: IPagingOptions, gridModel: IQgridModel<any>): ng.IPromise<{}>;
-        public autoComplete(val: any, gridModel: IQgridModel<any>): ng.IPromise<any>;
-        public exportGrid(type: any, gridModel: IQgridModel<any>): void;
-        public resetGrid(gridModel: IQgridModel<any>): ng.IPromise<{}>;
     }
 }
