@@ -1,14 +1,11 @@
-﻿angular.module('app', ['qGrid']);
+﻿angular.module('app', ['qgrid']);
 angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
-    var gridModel2 = {
-        columnDefs: [{}]
-    };
     var gridModel = {
         sortInfo: {
             directions: ['asc'],
             fields: ['FirstName']
         },
-        qGridSettings: {
+        qgridSettings: {
             gridId: "TestGrid",
             domain: "http://localhost:24001/",
             urlDataRequest: "api/UserGrid/DataRequest",
@@ -29,7 +26,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 displayName: "Id",
                 resizable: false,
                 width: 60,
-                qGridColumnSettings: {
+                qgridColumnSettings: {
                     searchOperation: 8 /* BeginsWith */,
                     qgridColumnHeaderStyle: 1 /* SearchTextBox */
                 }
@@ -40,7 +37,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 resizable: false,
                 width: '*',
                 searchOperation: 8 /* BeginsWith */,
-                qGridColumnSettings: {
+                qgridColumnSettings: {
                     searchOperation: 8 /* BeginsWith */,
                     qgridColumnHeaderStyle: 2 /* TypeaheadTexBox */
                 }
@@ -51,7 +48,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 resizable: false,
                 width: '*',
                 searchOperation: 8 /* BeginsWith */,
-                qGridColumnSettings: {
+                qgridColumnSettings: {
                     searchOperation: 8 /* BeginsWith */,
                     qgridColumnHeaderStyle: 2 /* TypeaheadTexBox */
                 }
@@ -63,16 +60,16 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 width: '*',
                 searchOperation: 5 /* IsGreaterOrEqualTo */,
                 cellFilter: 'date',
-                qGridColumnSettings: {
+                qgridColumnSettings: {
                     searchOperation: 5 /* IsGreaterOrEqualTo */,
-                    cellFormatter: new qGrid.DateTimeCellFormater('yyyy-MM-dd'),
+                    cellFormatter: new qgrid.DateTimeCellFormater('yyyy-MM-dd'),
                     qgridColumnHeaderStyle: 3 /* DatePickerTextBox */
                 }
             }]
     };
 
     $scope.grid = gridModel;
-    $scope.$watch('grid.qGridSettings.rows', function (rows) {
+    $scope.$watch('grid.qgridSettings.rows', function (rows) {
         if (rows) {
         }
     });

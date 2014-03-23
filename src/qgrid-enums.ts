@@ -1,4 +1,4 @@
-﻿module qGrid{
+﻿module qgrid{
     export enum SearchOp {
         IsEqualTo,
         IsNotEqualTo,

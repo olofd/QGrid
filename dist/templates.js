@@ -1,8 +1,8 @@
-angular.module('qGrid').run(['$templateCache', function($templateCache) {
+angular.module('qgrid').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('src/templates/qgrid/qgrid.html',
-    "<div ng-if=qGrid.qGridSettings.modelComplete class=qgrid ng-grid=qGrid></div>"
+    "<div ng-if=qgrid.qgridSettings.isLoaded class=qgrid ng-grid=qgrid></div>"
   );
 
 }]);

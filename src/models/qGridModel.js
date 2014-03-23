@@ -1,5 +1,5 @@
-﻿var qGrid;
-(function (qGrid) {
+﻿var qgrid;
+(function (qgrid) {
     var DateTimeCellFormater = (function () {
         function DateTimeCellFormater(format) {
             if (typeof format === "undefined") { format = 'yyyy-MM-dd HH:mm:ss'; }
@@ -14,61 +14,61 @@
         });
         return DateTimeCellFormater;
     })();
-    qGrid.DateTimeCellFormater = DateTimeCellFormater;
+    qgrid.DateTimeCellFormater = DateTimeCellFormater;
     var QGridHelper = (function () {
         function QGridHelper(gridModel, $http) {
             this.gridModel = gridModel;
         }
         QGridHelper.getShortSearchOpertionForSearchOperationEnum = function (column) {
-            if (column.qGridColumnSettings.searchOperation === 0 /* IsEqualTo */) {
+            if (column.qgridColumnSettings.searchOperation === 0 /* IsEqualTo */) {
                 return "eq";
             }
-            if (column.qGridColumnSettings.searchOperation === 1 /* IsNotEqualTo */) {
+            if (column.qgridColumnSettings.searchOperation === 1 /* IsNotEqualTo */) {
                 return "ne";
             }
-            if (column.qGridColumnSettings.searchOperation === 2 /* IsLessThan */) {
+            if (column.qgridColumnSettings.searchOperation === 2 /* IsLessThan */) {
                 return "lt";
             }
-            if (column.qGridColumnSettings.searchOperation === 3 /* IsLessOrEqualTo */) {
+            if (column.qgridColumnSettings.searchOperation === 3 /* IsLessOrEqualTo */) {
                 return "le";
             }
-            if (column.qGridColumnSettings.searchOperation === 4 /* IsGreaterThan */) {
+            if (column.qgridColumnSettings.searchOperation === 4 /* IsGreaterThan */) {
                 return "gt";
             }
-            if (column.qGridColumnSettings.searchOperation === 5 /* IsGreaterOrEqualTo */) {
+            if (column.qgridColumnSettings.searchOperation === 5 /* IsGreaterOrEqualTo */) {
                 return "ge";
             }
-            if (column.qGridColumnSettings.searchOperation === 6 /* IsIn */) {
+            if (column.qgridColumnSettings.searchOperation === 6 /* IsIn */) {
                 return "in";
             }
-            if (column.qGridColumnSettings.searchOperation === 7 /* IsNotIn */) {
+            if (column.qgridColumnSettings.searchOperation === 7 /* IsNotIn */) {
                 return "ni";
             }
-            if (column.qGridColumnSettings.searchOperation === 8 /* BeginsWith */) {
+            if (column.qgridColumnSettings.searchOperation === 8 /* BeginsWith */) {
                 return "bw";
             }
-            if (column.qGridColumnSettings.searchOperation === 9 /* DoesNotBeginWith */) {
+            if (column.qgridColumnSettings.searchOperation === 9 /* DoesNotBeginWith */) {
                 return "bn";
             }
-            if (column.qGridColumnSettings.searchOperation === 10 /* EndsWith */) {
+            if (column.qgridColumnSettings.searchOperation === 10 /* EndsWith */) {
                 return "ew";
             }
-            if (column.qGridColumnSettings.searchOperation === 11 /* DoesNotEndWith */) {
+            if (column.qgridColumnSettings.searchOperation === 11 /* DoesNotEndWith */) {
                 return "en";
             }
-            if (column.qGridColumnSettings.searchOperation === 12 /* Contains */) {
+            if (column.qgridColumnSettings.searchOperation === 12 /* Contains */) {
                 return "cn";
             }
-            if (column.qGridColumnSettings.searchOperation === 13 /* DoesNotContain */) {
+            if (column.qgridColumnSettings.searchOperation === 13 /* DoesNotContain */) {
                 return "nc";
             }
-            if (column.qGridColumnSettings.searchOperation === 14 /* ManualFilter */) {
+            if (column.qgridColumnSettings.searchOperation === 14 /* ManualFilter */) {
                 return "mf";
             }
             return "bw";
         };
         return QGridHelper;
     })();
-    qGrid.QGridHelper = QGridHelper;
-})(qGrid || (qGrid = {}));
-//# sourceMappingURL=qGridModel.js.map
+    qgrid.QGridHelper = QGridHelper;
+})(qgrid || (qgrid = {}));
+//# sourceMappingURL=qgridModel.js.map

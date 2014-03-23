@@ -1,5 +1,5 @@
-﻿var qGrid;
-(function (qGrid) {
+﻿var qgrid;
+(function (qgrid) {
     (function (SearchOp) {
         SearchOp[SearchOp["IsEqualTo"] = 0] = "IsEqualTo";
         SearchOp[SearchOp["IsNotEqualTo"] = 1] = "IsNotEqualTo";
@@ -16,18 +16,18 @@
         SearchOp[SearchOp["Contains"] = 12] = "Contains";
         SearchOp[SearchOp["DoesNotContain"] = 13] = "DoesNotContain";
         SearchOp[SearchOp["ManualFilter"] = 14] = "ManualFilter";
-    })(qGrid.SearchOp || (qGrid.SearchOp = {}));
-    var SearchOp = qGrid.SearchOp;
+    })(qgrid.SearchOp || (qgrid.SearchOp = {}));
+    var SearchOp = qgrid.SearchOp;
     (function (DataType) {
         DataType[DataType["DateTime"] = 0] = "DateTime";
-    })(qGrid.DataType || (qGrid.DataType = {}));
-    var DataType = qGrid.DataType;
+    })(qgrid.DataType || (qgrid.DataType = {}));
+    var DataType = qgrid.DataType;
     (function (IQGridColumnHeaderStyle) {
         IQGridColumnHeaderStyle[IQGridColumnHeaderStyle["None"] = 0] = "None";
         IQGridColumnHeaderStyle[IQGridColumnHeaderStyle["SearchTextBox"] = 1] = "SearchTextBox";
         IQGridColumnHeaderStyle[IQGridColumnHeaderStyle["TypeaheadTexBox"] = 2] = "TypeaheadTexBox";
         IQGridColumnHeaderStyle[IQGridColumnHeaderStyle["DatePickerTextBox"] = 3] = "DatePickerTextBox";
-    })(qGrid.IQGridColumnHeaderStyle || (qGrid.IQGridColumnHeaderStyle = {}));
-    var IQGridColumnHeaderStyle = qGrid.IQGridColumnHeaderStyle;
-})(qGrid || (qGrid = {}));
-//# sourceMappingURL=enums.js.map
+    })(qgrid.IQGridColumnHeaderStyle || (qgrid.IQGridColumnHeaderStyle = {}));
+    var IQGridColumnHeaderStyle = qgrid.IQGridColumnHeaderStyle;
+})(qgrid || (qgrid = {}));
+//# sourceMappingURL=qgrid-enums.js.map

@@ -1,1 +1,0 @@
-﻿angular.module('qGrid', ['ngGrid', 'ui.bootstrap']);

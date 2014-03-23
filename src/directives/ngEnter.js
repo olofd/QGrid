@@ -1,4 +1,4 @@
-﻿angular.module('qGrid').directive('ngEnter', function () {
+﻿angular.module('qgrid').directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if (event.which === 13) {

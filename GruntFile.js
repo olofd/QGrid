@@ -4,25 +4,28 @@
 module.exports = function (grunt) {
     var config = {
         pkg: grunt.file.readJSON('package.json'),
+
         typescript: {
             base: {
                 src: [
                     'Scripts/typings/angularjs/angular.d.ts',
                     'Scripts/typings/jquery/jquery.d.ts',
-                    'src/interfaces.ts',
-                    'src/enums.ts',
-                    'src/init.ts',
-                    'src/models/qGridModel.ts',
-                    'src/directives/ngEnter.ts',
-                    'src/directives/qGrid.ts',
-                    'src/controllers/qGridController.ts',
+                    'src/qgrid-interfaces.ts',
+                    'src/qgrid-enums.ts',
+                    'src/qgrid-init.ts',
+                    'src/models/*.ts',
+                    'src/directives/*.ts',
+                    'src/controllers/*.ts',
+                    'src/services/*.ts',
+                    'src/classes/*.ts'
+
                
 
                 ],
                 dest: 'dist/qgrid.js',
                 options: {
                     module: 'amd',
-                    sourcemap: true,
+                    sourceMap: true,
                     declaration: true,
                     target: 'es5'
                 }
@@ -39,9 +42,9 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: ['**/*.ts'],
+                files: ['**/*.ts', '**/js', '**/*.html', '**/*.css'],
                 tasks: [
-                    'typescript'
+                 'typescript', 'ngtemplates:qgrid', 'ngtemplates:nggrid', 'concat:js', 'concat:all', 'uglify', 'cssmin:minify'
                 ],
                 options: {
                     spawn: false,
@@ -60,8 +63,14 @@ module.exports = function (grunt) {
             server: '.tmp'
         },
         concat: {
-            dist: {
-                src: ['dist/qgrid.js', 'dist/templates.js', 'dist/nggridtemplates.js'],
+            js: {
+                src: [
+                    'libs/angularui-ext/typeahead/typeahead.js'
+                ],
+                dest: 'dist/js.js',
+            },
+            all: {
+                src: ['dist/js.js', 'dist/qgrid.js', 'dist/templates.js', 'dist/nggridtemplates.js'],
                 dest: 'dist/qgrid.js',
             }
         },
@@ -72,7 +81,7 @@ module.exports = function (grunt) {
                 dest: 'dist/templates.js',
                 options: {
 
-                    module: 'qGrid',
+                    module: 'qgrid',
                 }
             },
             nggrid: {
@@ -120,11 +129,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
 
     // Default task(s).
-    grunt.registerTask('default', ['clean:dist', 'typescript', 'ngtemplates:qgrid', 'ngtemplates:nggrid', 'concat', 'uglify', 'cssmin:minify']);
-
+    grunt.registerTask('build', ['clean:dist', 'typescript', 'ngtemplates:qgrid', 'ngtemplates:nggrid', 'concat:js', 'concat:all', 'uglify', 'cssmin:minify']);
 
 
 

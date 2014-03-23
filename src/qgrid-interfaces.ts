@@ -1,8 +1,8 @@
-﻿module qGrid{
+﻿module qgrid{
     export interface IGridModel<T>  {
 
         data: any;
-        qGridSettings: IQGridSettings<T>;
+        qgridSettings: IQGridSettings<T>;
         pagingOptions: IPagingOptions;
         totalServerItems: string;
         sortInfo: ISortInfo;
@@ -124,8 +124,16 @@
 
         /** Enables or disables text highlighting in grid by adding the "unselectable" class (See CSS file) */
         enableHighlighting: boolean;
+    }
+    export interface IQgridScope<any> extends ng.IScope{
+        qgrid: IGridModel<any>;
+    }
+    export interface IQgridExtender{
+        deepExtend: <T>(destination: T, source: T) => T
+    }
 
-
+    export interface IDefaultModelGetter{
+        getNewDefault: <T>() => T;
     }
     export interface IQGridSettings<T>{
         gridId: string;
@@ -138,20 +146,32 @@
         enablePDFExport: boolean;
         enableCSVExport: boolean;
         enableFooterSettings: boolean;
-        performSearch: () => any;
-        requestData: (searchObject: IServerRequestObject) => ng.IHttpPromise<T[]>
-        loadGrid: () => ng.IPromise<T>;
-        buildServerRequestObject: (search: boolean) => IServerRequestObject;
-        dataLoaded: (data: T[]) => any;
         rows: T[];
         totalServerItems: number;
-        onSort: (newVal: qGrid.ISortInfo, oldVal: qGrid.ISortInfo) => any;
-        onPaging: (newVal: qGrid.IPagingOptions, oldVal: qGrid.IPagingOptions) => any;
+        footerActions: IFooterAction<T>[];
+        isLoading: boolean;
+        //performSearch: () => any;
+        resetGrid: () => any;
         autoComplete: (col: IColumn) => any;
         exportGrid: (type) => any;
-        footerActions: IFooterAction<T>[];
-        resetGrid: () => any;
-        isLoading: boolean;
+        loadGrid: () => ng.IPromise<T>;
+        isLoaded: boolean;
+
+
+    }
+    export interface IGridService {
+        performSearch: (gridModel : IGridModel<any>) => any;
+        resetGrid: (gridModel: IGridModel<any>) => any;
+        onSort: (newVal: qgrid.ISortInfo, oldVal: qgrid.ISortInfo, gridModel: IGridModel<any>) => any;
+        onPaging: (newVal: qgrid.IPagingOptions, oldVal: qgrid.IPagingOptions, gridModel: IGridModel<any>) => any;
+        autoComplete: (col: IColumn, gridModel: IGridModel<any>) => any;
+        exportGrid: (type, gridModel: IGridModel<any>) => any;
+        requestData: (searchObject: IServerRequestObject, gridModel: IGridModel<any>) => ng.IHttpPromise<any[]>
+        loadGrid: (gridModel: IGridModel<any>) => ng.IPromise<any>;
+        buildServerRequestObject: (gridModel: IGridModel<any>) => IServerRequestObject;
+    }
+    export interface IServerRequestBuilder{
+        constructServcerRequestObject(gridModel : IGridModel<any>): IServerRequestObject;
     }
     export interface IFooterAction<T>{
         title: string;
@@ -179,7 +199,7 @@
         headerCellTemplate?: string;
         cellFilter?: string;
         aggLabelFilter?: string;
-        qGridColumnSettings?: IQGridColumnsSettings;
+        qgridColumnSettings?: IQGridColumnsSettings;
 
 
     }
@@ -203,7 +223,7 @@
         pageSizes: number[];
         pageSize: number;
         currentPage: number;
-        manualPaging: boolean;
+        manualPaging?: boolean;
     }
     export interface IServerResponseObject<T> {
         page: number;
@@ -234,7 +254,7 @@
         pk: boolean;
     }
     export interface IQGridScope<T> extends ng.IScope{
-        qGrid: IGridModel<T>;
+        qgrid: IGridModel<T>;
     } 
     export interface IQgridCellFormatter{
        template: string;

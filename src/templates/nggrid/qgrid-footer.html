@@ -1,28 +1,27 @@
 ﻿<div ng-show="showFooter" class="qgrid-footer" ng-style="footerStyle()">
-    <div class="container">
-        <div class="row">
+        <div class="row" style="padding:0px 10px 0px 10px;">
             <div class="col-xs-3">
                 <span class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm" ng-click="$parent.$parent.qGrid.qGridSettings.resetGrid()">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="$parent.$parent.qgrid.qgridSettings.resetGrid()">
                         <span class="fa fa-refresh"></span>
                     </button>
-                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-if="$parent.$parent.qGrid.qGridSettings.enableFooterSettings">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-if="$parent.$parent.qgrid.qgridSettings.enableFooterSettings">
                         <i class="fa fa-cogs"></i>
                         <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown-menu">
-                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enableExcelExport">
-                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('Excel')">Export to Excel</a>
+                        <li ng-if="$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enableExcelExport">
+                            <a href="#" ng-click="$parent.$parent.qgrid.qgridSettings.exportGrid('Excel')">Export to Excel</a>
                         </li>
-                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enablePDFExport">
-                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('PDF')">Export to PDF</a>
+                        <li ng-if="$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enablePDFExport">
+                            <a href="#" ng-click="$parent.$parent.qgrid.qgridSettings.exportGrid('PDF')">Export to PDF</a>
                         </li>
-                        <li ng-if="$parent.$parent.qGrid.qGridSettings.enableAllExports || $parent.$parent.qGrid.qGridSettings.enableCSVExport">
-                            <a href="#" ng-click="$parent.$parent.qGrid.qGridSettings.exportGrid('CSV')">Export to CSV</a>
+                        <li ng-if="$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enableCSVExport">
+                            <a href="#" ng-click="$parent.$parent.qgrid.qgridSettings.exportGrid('CSV')">Export to CSV</a>
                         </li>
-                        <li ng-repeat="footerFunction in $parent.$parent.qGrid.qGridSettings.footerActions">
-                            <a href="#" ng-click="footerFunction.callback(footerFunction, $parent.$parent.qGrid)">
+                        <li ng-repeat="footerFunction in $parent.$parent.qgrid.qgridSettings.footerActions">
+                            <a href="#" ng-click="footerFunction.callback(footerFunction, $parent.$parent.qgrid)">
                                 {{footerFunction.title}}
                             </a>
                         </li>
@@ -40,7 +39,7 @@
                         <i class="fa fa-chevron-left qgrid-pager-button"></i>
                     </button>
                     <span class="qgrid-pager-input">
-                        <input class="ngPagerCurrent" min="1" max="{{currentMaxPages}}" type="number" style="width:49px; height: 30px;" ng-model="pagingOptions.currentPage" ng-disabled="$parent.$parent.qGrid.qGridSettings.isLoading" />
+                        <input class="ngPagerCurrent" min="1" max="{{currentMaxPages}}" type="number" style="width:49px; height: 29.5px;" ng-model="pagingOptions.currentPage" ng-disabled="$parent.$parent.qgrid.qgridSettings.isLoading" />
                     </span>
                     <button ng-click="pageForward()" ng-disabled="cantPageForward()" type="button" class="btn btn-default btn-sm" style="border-left:none !important;">
                         <i class="fa fa-chevron-right qgrid-pager-button"></i>
@@ -84,10 +83,9 @@
 
                     </span>
                     <span tooltip-placement="right" tooltip="I spin when the grid is loading!">
-                        <i class="qgrid-spinner fa fa-cog" ng-class="{'fa-spin' : $parent.$parent.qGrid.qGridSettings.isLoading}"></i>
+                        <i class="qgrid-spinner fa fa-cog" ng-class="{'fa-spin' : $parent.$parent.qgrid.qgridSettings.isLoading}"></i>
                     </span>
                 </div>
             </div>
         </div>
-    </div>
 </div>

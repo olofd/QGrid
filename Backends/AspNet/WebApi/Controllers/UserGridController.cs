@@ -48,16 +48,7 @@ namespace AspNet.Controllers
             //       };
 
 
-            return (new List<UserModel>
-            {
-                new UserModel
-                {
-                    Id = 1,
-                    FirstName = "Olof",
-                    LastName = "Dahlbom",
-                    Created = DateTime.Now
-                }
-            }).AsQueryable();
+            return FakeData.CreateFakeData().AsQueryable();
         }
         [Route("Export")]
         public bool Export(RequestParams reqParams)

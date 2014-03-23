@@ -3,20 +3,15 @@
     Name: string;
     Created: string;
 }
-angular.module('app', ['qGrid']);
+angular.module('app', ['qgrid']);
 angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
 
-    var gridModel2 = <qGrid.IGridModel<Service>>{
-        columnDefs: [{
-
-        }]
-    }
-    var gridModel = <qGrid.IGridModel<Service>>{
+    var gridModel = <qgrid.IGridModel<Service>>{
         sortInfo: {
             directions: ['asc'],
             fields: ['FirstName']
         },
-        qGridSettings: {
+        qgridSettings: {
             gridId: "TestGrid",
             domain: "http://localhost:24001/",
             urlDataRequest: "api/UserGrid/DataRequest",
@@ -26,7 +21,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
             enableFooterSettings: true,
             footerActions: [{
                 title: "TestAction",
-                callback: function (footerAction, grid) {
+                 callback: function (footerAction, grid) {
                     console.log(footerAction, grid);
                 }
 
@@ -38,9 +33,9 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 displayName: "Id",
                 resizable: false,
                 width: 60,
-                qGridColumnSettings: {
-                    searchOperation: qGrid.SearchOp.BeginsWith,
-                    qgridColumnHeaderStyle: qGrid.IQGridColumnHeaderStyle.SearchTextBox
+                qgridColumnSettings: {
+                    searchOperation: qgrid.SearchOp.BeginsWith,
+                    qgridColumnHeaderStyle: qgrid.IQGridColumnHeaderStyle.SearchTextBox
                 }
             },
             {
@@ -48,10 +43,10 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 displayName: "First Name",
                 resizable: false,
                 width: '*',
-                searchOperation: qGrid.SearchOp.BeginsWith,
-                qGridColumnSettings: {
-                    searchOperation: qGrid.SearchOp.BeginsWith,
-                    qgridColumnHeaderStyle: qGrid.IQGridColumnHeaderStyle.TypeaheadTexBox
+                searchOperation: qgrid.SearchOp.BeginsWith,
+                qgridColumnSettings: {
+                    searchOperation: qgrid.SearchOp.BeginsWith,
+                    qgridColumnHeaderStyle: qgrid.IQGridColumnHeaderStyle.TypeaheadTexBox
                 }
 
             },
@@ -60,10 +55,10 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 displayName: "Last Name",
                 resizable: false,
                 width: '*',
-                searchOperation: qGrid.SearchOp.BeginsWith,
-                qGridColumnSettings: {
-                    searchOperation: qGrid.SearchOp.BeginsWith,
-                    qgridColumnHeaderStyle: qGrid.IQGridColumnHeaderStyle.TypeaheadTexBox
+                searchOperation: qgrid.SearchOp.BeginsWith,
+                qgridColumnSettings: {
+                    searchOperation: qgrid.SearchOp.BeginsWith,
+                    qgridColumnHeaderStyle: qgrid.IQGridColumnHeaderStyle.TypeaheadTexBox
                 }
 
             },
@@ -72,12 +67,12 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 displayName: "Created",
                 resizable: false,
                 width: '*',
-                searchOperation: qGrid.SearchOp.IsGreaterOrEqualTo,
+                searchOperation: qgrid.SearchOp.IsGreaterOrEqualTo,
                 cellFilter: 'date',
-                qGridColumnSettings: {
-                    searchOperation: qGrid.SearchOp.IsGreaterOrEqualTo,
-                    cellFormatter: new qGrid.DateTimeCellFormater('yyyy-MM-dd'),
-                    qgridColumnHeaderStyle: qGrid.IQGridColumnHeaderStyle.DatePickerTextBox
+                qgridColumnSettings: {
+                    searchOperation: qgrid.SearchOp.IsGreaterOrEqualTo,
+                    cellFormatter: new qgrid.DateTimeCellFormater('yyyy-MM-dd'),
+                    qgridColumnHeaderStyle: qgrid.IQGridColumnHeaderStyle.DatePickerTextBox
 
                 }
             }]
@@ -85,7 +80,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
 
 
     $scope.grid = gridModel;
-    $scope.$watch('grid.qGridSettings.rows', function (rows: Service[]) {
+    $scope.$watch('grid.qgridSettings.rows', function (rows: Service[]) {
         if (rows) {
 
         }
