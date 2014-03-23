@@ -1,7 +1,7 @@
 ﻿angular.module('qgrid').factory('qgridDefaultQgridModel', function () {
     return <qgrid.IDefaultModelGetter>{
         getNewDefault: function <T>() {
-            return <qgrid.IGridModel<T>>{
+            return <qgrid.IQgridModel<T>>{
                 data: "qgrid.qgridSettings.rows",
                 totalServerItems: "qgrid.qgridSettings.totalServerItems",
                 headerRowHeight: 75,

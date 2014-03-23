@@ -12,7 +12,6 @@
                 enableExcelExport: false,
                 enablePDFExport: false,
                 enableCSVExport: false,
-                enableFooterSettings: false,
                 totalServerItems: 0,
                 isLoading: false
             };

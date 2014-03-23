@@ -410,7 +410,6 @@ angular.module('qgrid').factory('qgridDefaultQgridSettings', function () {
                 enableExcelExport: false,
                 enablePDFExport: false,
                 enableCSVExport: false,
-                enableFooterSettings: false,
                 totalServerItems: 0,
                 isLoading: false
             };
@@ -560,9 +559,7 @@ var qgrid;
             $scope.qgrid = this.setupGrid($scope.qgrid);
             $scope.$watch('qgrid.qgridSettings.isLoaded', function (newVal, oldVal) {
                 if (newVal) {
-                    _this.$timeout(function () {
-                        _this.loadGrid($scope.qgrid);
-                    }, 0);
+                    _this.loadGrid($scope.qgrid);
                 }
             }, true);
 
@@ -609,6 +606,12 @@ var qgrid;
             newModel.qgridSettings.autoComplete = (function (gridModel, igridService) {
                 return function (column) {
                     return igridService.autoComplete(column, gridModel);
+                };
+            }(newModel, this));
+
+            newModel.qgridSettings.performSearch = (function (gridModel, igridService) {
+                return function () {
+                    return igridService.performSearch(gridModel);
                 };
             }(newModel, this));
 

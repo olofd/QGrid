@@ -12,7 +12,6 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
             urlAutoComplete: "api/UserGrid/AutoComplete",
             urlExport: "api/UserGrid/Export",
             enableAllExports: true,
-            enableFooterSettings: true,
             footerActions: [{
                     title: "TestAction",
                     callback: function (footerAction, grid) {

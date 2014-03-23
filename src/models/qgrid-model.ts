@@ -1,7 +1,7 @@
 ﻿module qgrid {
 
-    export class DateTimeCellFormater implements IQgridCellFormatter{
-        constructor(public format = 'yyyy-MM-dd HH:mm:ss'){
+    export class DateTimeCellFormater implements IQgridCellFormatter {
+        constructor(public format = 'yyyy-MM-dd HH:mm:ss') {
 
         }
 
@@ -12,10 +12,10 @@
     }
     export class QGridHelper<T> {
         data: T[];
-        constructor(public gridModel: IGridModel<T>, $http : ng.IHttpService) {
+        constructor(public gridModel: IQgridModel<T>, $http: ng.IHttpService) {
         }
 
-         
+
     }
 
 

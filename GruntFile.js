@@ -10,7 +10,7 @@ module.exports = function (grunt) {
                 src: [
                     'Scripts/typings/angularjs/angular.d.ts',
                     'Scripts/typings/jquery/jquery.d.ts',
-                    'src/qgrid-interfaces.ts',
+                    'src/interfaces/*.ts',
                     'src/qgrid-enums.ts',
                     'src/qgrid-init.ts',
                     'src/models/*.ts',
@@ -18,9 +18,6 @@ module.exports = function (grunt) {
                     'src/controllers/*.ts',
                     'src/services/*.ts',
                     'src/classes/*.ts'
-
-               
-
                 ],
                 dest: 'dist/qgrid.js',
                 options: {

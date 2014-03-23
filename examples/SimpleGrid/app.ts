@@ -6,19 +6,18 @@
 angular.module('app', ['qgrid']);
 angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
 
-    var gridModel = <qgrid.IGridModel<Service>>{
+    var gridModel = <qgrid.IQgridModel<Service>>{
         sortInfo: {
             directions: ['asc'],
             fields: ['FirstName']
         },
         qgridSettings: {
-            gridId: "TestGrid",
+            gridId : "TestGrid",
             domain: "http://localhost:24001/",
             urlDataRequest: "api/UserGrid/DataRequest",
             urlAutoComplete: "api/UserGrid/AutoComplete",
             urlExport: "api/UserGrid/Export",
             enableAllExports: true,
-            enableFooterSettings: true,
             footerActions: [{
                 title: "TestAction",
                  callback: function (footerAction, grid) {

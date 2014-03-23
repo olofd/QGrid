@@ -1,11 +1,11 @@
-﻿ module qgrid {
-     export class ServerRequestBuilder implements IServerRequestBuilder  {
+﻿module qgrid {
+    export class ServerRequestBuilder implements IServerRequestBuilder {
         static $inject = ['$http', '$q', '$timeout', 'qgridExtender']
         constructor(private $http: ng.IHttpService, private $q: ng.IQService, private $timeout: ng.ITimeoutService, private qgridExtender: IQgridExtender) {
 
         }
-         
-        constructServcerRequestObject(gridModel: IGridModel<any>): IServerRequestObject {
+
+        constructServcerRequestObject(gridModel: IQgridModel<any>): IServerRequestObject {
             var that = this;
             var requestObject = <IServerRequestObject>{
                 requestInfo: {
@@ -22,7 +22,7 @@
 
             return requestObject;
         }
-        constructRequestSearchObject(gridModel: IGridModel<any>): Array<qgrid.IColumnsSearchInfo> {
+        constructRequestSearchObject(gridModel: IQgridModel<any>): Array<qgrid.IColumnsSearchInfo> {
             var isSearch = false;
             var soObject = Array<qgrid.IColumnsSearchInfo>();
             for (var i = 0; i < gridModel.columnDefs.length; i++) {
@@ -39,12 +39,12 @@
             }
             return soObject;
         }
-        findSortOrder(gridModel: IGridModel<any>) {
+        findSortOrder(gridModel: IQgridModel<any>) {
             if (gridModel.sortInfo && gridModel.sortInfo.directions && gridModel.sortInfo.directions.length > 0) {
                 return gridModel.sortInfo.directions[0];
             }
         }
-        findSortField(gridModel: IGridModel<any>) {
+        findSortField(gridModel: IQgridModel<any>) {
             if (gridModel.sortInfo && gridModel.sortInfo.fields && gridModel.sortInfo.fields.length > 0) {
                 return gridModel.sortInfo.fields[0];
             }
@@ -65,57 +65,57 @@
             }
             return _p8(undefined) + _p8(true) + _p8(true) + _p8(undefined);
         }
-                 getShortSearchOpertionForSearchOperationEnum(column: IColumn) {
+        getShortSearchOpertionForSearchOperationEnum(column: IColumn) {
 
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsEqualTo) {
-                 return "eq";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsNotEqualTo) {
-                 return "ne";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsLessThan) {
-                 return "lt";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsLessOrEqualTo) {
-                 return "le";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsGreaterThan) {
-                 return "gt";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsGreaterOrEqualTo) {
-                 return "ge";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsIn) {
-                 return "in";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.IsNotIn) {
-                 return "ni";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.BeginsWith) {
-                 return "bw";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotBeginWith) {
-                 return "bn";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.EndsWith) {
-                 return "ew";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotEndWith) {
-                 return "en";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.Contains) {
-                 return "cn";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotContain) {
-                 return "nc";
-             }
-             if (column.qgridColumnSettings.searchOperation === SearchOp.ManualFilter) {
-                 return "mf";
-             }
-             return "bw";
-         }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsEqualTo) {
+                return "eq";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsNotEqualTo) {
+                return "ne";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsLessThan) {
+                return "lt";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsLessOrEqualTo) {
+                return "le";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsGreaterThan) {
+                return "gt";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsGreaterOrEqualTo) {
+                return "ge";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsIn) {
+                return "in";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.IsNotIn) {
+                return "ni";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.BeginsWith) {
+                return "bw";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotBeginWith) {
+                return "bn";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.EndsWith) {
+                return "ew";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotEndWith) {
+                return "en";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.Contains) {
+                return "cn";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.DoesNotContain) {
+                return "nc";
+            }
+            if (column.qgridColumnSettings.searchOperation === SearchOp.ManualFilter) {
+                return "mf";
+            }
+            return "bw";
+        }
 
-     }
- }
+    }
+}
 
- angular.module('qgrid').service('qgridServerRequestBuilder', qgrid.ServerRequestBuilder); 
+angular.module('qgrid').service('qgridServerRequestBuilder', qgrid.ServerRequestBuilder); 
