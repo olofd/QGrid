@@ -4,7 +4,7 @@
     Created: string;
 }
 angular.module('app', ['qgrid']);
-angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
+angular.module('app').controller('SimpleGridCtrl', ['$scope', '$http', 'qgridDateTimeCellFormatter', function ($scope, $http, qgridDateTimeCellFormatter : qgrid.DateTimeCellFormatter) {
 
     var gridModel = <qgrid.IQgridModel<Service>>{
         sortInfo: {
@@ -70,7 +70,7 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
                 cellFilter: 'date',
                 qgridColumnSettings: {
                     searchOperation: qgrid.SearchOp.IsGreaterOrEqualTo,
-                    cellFormatter: new qgrid.DateTimeCellFormater('yyyy-MM-dd'),
+                    cellFormatter: qgridDateTimeCellFormatter,
                     qgridColumnHeaderStyle: qgrid.IQGridColumnHeaderStyle.DatePickerTextBox
 
                 }
@@ -84,4 +84,4 @@ angular.module('app').controller('SimpleGridCtrl', function ($scope, $http) {
 
         }
     });
-});
+}]);

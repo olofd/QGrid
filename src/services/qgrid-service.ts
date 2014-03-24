@@ -1,11 +1,12 @@
 ﻿module qgrid {
     export class GridService implements IQgridService {
-        static $inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations']
+        static $inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations', '$templateCache']
         constructor(
             private qgridExtender: IQgridExtender,
             private qgridDefaultQgridModel: qgrid.IDefaultModelGetter,
             private qgridDefaultQgridSettings: qgrid.IDefaultModelGetter,
-            public qgridOperations: qgrid.IQgridOperations) {
+            public qgridOperations: qgrid.IQgridOperations,
+            private $templateCache : ng.ITemplateCacheService) {
 
         }
 
@@ -71,10 +72,12 @@
                     col.cellTemplate = col.qgridColumnSettings.cellFormatter.template;
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === qgrid.IQGridColumnHeaderStyle.TypeaheadTexBox) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-typeahead-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-typeahead-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === qgrid.IQGridColumnHeaderStyle.SearchTextBox) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-searchtextbox-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-searchtextbox-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
             }
             console.log(newModel);

@@ -1,11 +1,12 @@
 ﻿var qgrid;
 (function (qgrid) {
     var GridService = (function () {
-        function GridService(qgridExtender, qgridDefaultQgridModel, qgridDefaultQgridSettings, qgridOperations) {
+        function GridService(qgridExtender, qgridDefaultQgridModel, qgridDefaultQgridSettings, qgridOperations, $templateCache) {
             this.qgridExtender = qgridExtender;
             this.qgridDefaultQgridModel = qgridDefaultQgridModel;
             this.qgridDefaultQgridSettings = qgridDefaultQgridSettings;
             this.qgridOperations = qgridOperations;
+            this.$templateCache = $templateCache;
         }
         GridService.prototype.createGrid = function ($scope) {
             var _this = this;
@@ -80,16 +81,18 @@
                     col.cellTemplate = col.qgridColumnSettings.cellFormatter.template;
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === 2 /* TypeaheadTexBox */) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-typeahead-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-typeahead-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === 1 /* SearchTextBox */) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-searchtextbox-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-searchtextbox-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
             }
             console.log(newModel);
             return newModel;
         };
-        GridService.$inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations'];
+        GridService.$inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations', '$templateCache'];
         return GridService;
     })();
     qgrid.GridService = GridService;

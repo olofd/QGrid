@@ -307,21 +307,6 @@ var qgrid;
 angular.module('qgrid', ['ngGrid', 'ui.bootstrap']);
 var qgrid;
 (function (qgrid) {
-    var DateTimeCellFormater = (function () {
-        function DateTimeCellFormater(format) {
-            if (typeof format === "undefined") { format = 'yyyy-MM-dd HH:mm:ss'; }
-            this.format = format;
-        }
-        Object.defineProperty(DateTimeCellFormater.prototype, "template", {
-            get: function () {
-                return "/src/templates/nggrid/qgrid-datetime-cell.html";
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return DateTimeCellFormater;
-    })();
-    qgrid.DateTimeCellFormater = DateTimeCellFormater;
     var QGridHelper = (function () {
         function QGridHelper(gridModel, $http) {
             this.gridModel = gridModel;
@@ -356,6 +341,26 @@ angular.module('qgrid').directive('qgrid', [
                 }]
         };
     }]);
+var qgrid;
+(function (qgrid) {
+    var DateTimeCellFormatter = (function () {
+        function DateTimeCellFormatter($templateCache) {
+            this.$templateCache = $templateCache;
+        }
+        Object.defineProperty(DateTimeCellFormatter.prototype, "template", {
+            get: function () {
+                return this.$templateCache.get('/src/templates/nggrid/qgrid-datetime-cell.html');
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DateTimeCellFormatter.$inject = ['$templateCache'];
+        return DateTimeCellFormatter;
+    })();
+    qgrid.DateTimeCellFormatter = DateTimeCellFormatter;
+})(qgrid || (qgrid = {}));
+
+angular.module('qgrid').service('qgridDateTimeCellFormatter', qgrid.DateTimeCellFormatter);
 angular.module('qgrid').factory('qgridExtender', function () {
     return {
         deepExtend: function (destination, source) {
@@ -625,11 +630,12 @@ angular.module('qgrid').service('qgridServerRequestBuilder', qgrid.ServerRequest
 var qgrid;
 (function (qgrid) {
     var GridService = (function () {
-        function GridService(qgridExtender, qgridDefaultQgridModel, qgridDefaultQgridSettings, qgridOperations) {
+        function GridService(qgridExtender, qgridDefaultQgridModel, qgridDefaultQgridSettings, qgridOperations, $templateCache) {
             this.qgridExtender = qgridExtender;
             this.qgridDefaultQgridModel = qgridDefaultQgridModel;
             this.qgridDefaultQgridSettings = qgridDefaultQgridSettings;
             this.qgridOperations = qgridOperations;
+            this.$templateCache = $templateCache;
         }
         GridService.prototype.createGrid = function ($scope) {
             var _this = this;
@@ -701,16 +707,18 @@ var qgrid;
                     col.cellTemplate = col.qgridColumnSettings.cellFormatter.template;
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === 2 /* TypeaheadTexBox */) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-typeahead-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-typeahead-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
                 if (col.qgridColumnSettings.qgridColumnHeaderStyle === 1 /* SearchTextBox */) {
-                    col.headerCellTemplate = 'src/templates/nggrid/qgrid-searchtextbox-header-cell.html';
+                    col.headerCellTemplate = this.$templateCache.get('src/templates/qgrid/qgrid-searchtextbox-header-cell.html');
+                    console.log(col.headerCellTemplate);
                 }
             }
             console.log(newModel);
             return newModel;
         };
-        GridService.$inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations'];
+        GridService.$inject = ['qgridExtender', 'qgridDefaultQgridModel', 'qgridDefaultQgridSettings', 'qgridOperations', '$templateCache'];
         return GridService;
     })();
     qgrid.GridService = GridService;
@@ -722,6 +730,21 @@ angular.module('qgrid').service('qgridService', qgrid.GridService);
 angular.module('qgrid').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('src/templates/qgrid/qgrid-datetime-cell.html',
+    "<div class=ngCellText ng-class=col.colIndex()><span ng-cell-text=\"\">{{row.getProperty(col.field) | date: col.colDef.qgridColumnSettings.cellFormatter.format}}</span></div>"
+  );
+
+
+  $templateCache.put('src/templates/qgrid/qgrid-searchtextbox-header-cell.html',
+    "<div class=\"ngHeaderSortColumn {{col.headerClass}} qgrid-header-cell\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !noSortVisible }\"><div ng-click=col.sort($event) ng-class=\"'colt' + col.index\" class=ngHeaderText>{{col.displayName}}</div><form class=\"bs-example bs-example-form\" role=form><span style=\"display:inline-block; padding: 0px 5px 0px 5px; width: 100%\"><div class=input-group style=\"width: 100%\"><input type=text class=form-control placeholder={{col.displayName}} ng-enter=$parent.qgrid.qgridSettings.performSearch() ng-model=col.colDef.qgridColumnSettings.searchValue></div></span></form><div class=ngSortButtonDown ng-show=col.showSortButtonDown()></div><div class=ngSortButtonUp ng-show=col.showSortButtonUp()></div><div class=ngSortPriority>{{col.sortPriority}}</div><div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=togglePin(col) ng-show=col.pinnable></div></div><div ng-show=col.resizable class=ngHeaderGrip ng-click=col.gripClick($event) ng-mousedown=col.gripOnMouseDown($event)></div>"
+  );
+
+
+  $templateCache.put('src/templates/qgrid/qgrid-typeahead-header-cell.html',
+    "<div class=\"ngHeaderSortColumn {{col.headerClass}} typeahead\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !noSortVisible }\"><div ng-click=col.sort($event) ng-class=\"'colt' + col.index\" class=ngHeaderText>{{col.displayName}}</div><span style=\"display:inline-block; padding: 0 5px 0 5px; width: 100%\"><input type=text ng-model=col.colDef.qgridColumnSettings.searchValue placeholder={{col.displayName}} ng-dblclick=openTypeAhead() qgrid-typeahead=\"address for address in $parent.qgrid.qgridSettings.autoComplete(col.colDef) | filter:$viewValue\" qrid-typeahead-editable=true qgrid-typeahead-loading=loadingLocations class=form-control ng-enter=$parent.qgrid.qgridSettings.performSearch()></span><div class=ngSortButtonDown ng-show=col.showSortButtonDown()></div><div class=ngSortButtonUp ng-show=col.showSortButtonUp()></div><div class=ngSortPriority>{{col.sortPriority}}</div><div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=togglePin(col) ng-show=col.pinnable></div></div><div ng-show=col.resizable class=ngHeaderGrip ng-click=col.gripClick($event) ng-mousedown=col.gripOnMouseDown($event)></div>"
+  );
+
+
   $templateCache.put('src/templates/qgrid/qgrid.html',
     "<div ng-if=qgrid.qgridSettings.isLoaded class=qgrid ng-grid=qgrid></div>"
   );
@@ -730,11 +753,6 @@ angular.module('qgrid').run(['$templateCache', function($templateCache) {
 
 angular.module('ngGrid').run(['$templateCache', function($templateCache) {
   'use strict';
-    console.log("Runnign");
-  $templateCache.put('src/templates/nggrid/qgrid-datetime-cell.html',
-    "<div class=ngCellText ng-class=col.colIndex()><span ng-cell-text=\"\">{{row.getProperty(col.field) | date: col.colDef.qgridColumnSettings.cellFormatter.format}}</span></div>"
-  );
-
 
   $templateCache.put('src/templates/nggrid/qgrid-footer.html',
     "<div ng-show=showFooter class=qgrid-footer ng-style=footerStyle()><div class=row style=\"padding:0px 10px 0px 10px\"><div class=col-xs-3><span class=btn-group><button type=button class=\"btn btn-default btn-sm\" ng-click=$parent.$parent.qgrid.qgridSettings.resetGrid()><span class=\"fa fa-refresh\"></span></button> <button type=button class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=dropdown ng-if=$parent.$parent.qgrid.qgridSettings.enableFooterSettings><i class=\"fa fa-cogs\"></i> <span class=caret></span></button><ul class=dropdown-menu><li ng-if=\"$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enableExcelExport\"><a href=# ng-click=\"$parent.$parent.qgrid.qgridSettings.exportGrid('Excel')\">Export to Excel</a></li><li ng-if=\"$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enablePDFExport\"><a href=# ng-click=\"$parent.$parent.qgrid.qgridSettings.exportGrid('PDF')\">Export to PDF</a></li><li ng-if=\"$parent.$parent.qgrid.qgridSettings.enableAllExports || $parent.$parent.qgrid.qgridSettings.enableCSVExport\"><a href=# ng-click=\"$parent.$parent.qgrid.qgridSettings.exportGrid('CSV')\">Export to CSV</a></li><li ng-repeat=\"footerFunction in $parent.$parent.qgrid.qgridSettings.footerActions\"><a href=# ng-click=\"footerFunction.callback(footerFunction, $parent.$parent.qgrid)\">{{footerFunction.title}}</a></li></ul></span></div><div class=col-xs-6 style=text-align:center><div class=btn-group><button ng-click=pageToFirst() ng-disabled=cantPageBackward() type=button class=\"btn btn-default btn-sm\"><i class=\"fa fa-step-backward qgrid-pager-button\"></i></button> <button ng-click=pageBackward() ng-disabled=cantPageBackward() type=button class=\"btn btn-default btn-sm\" style=\"border-right:none !important\"><i class=\"fa fa-chevron-left qgrid-pager-button\"></i></button> <span class=qgrid-pager-input><input class=ngPagerCurrent min=1 max={{currentMaxPages}} type=number style=\"width:49px; height: 29.5px\" ng-model=pagingOptions.currentPage ng-disabled=$parent.$parent.qgrid.qgridSettings.isLoading></span> <button ng-click=pageForward() ng-disabled=cantPageForward() type=button class=\"btn btn-default btn-sm\" style=\"border-left:none !important\"><i class=\"fa fa-chevron-right qgrid-pager-button\"></i></button> <button ng-click=pageToLast() ng-disabled=cantPageToLast() type=button class=\"btn btn-default btn-sm\"><i class=\"fa fa-step-forward qgrid-pager-button\"></i></button> <button type=button class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=dropdown>{{pagingOptions.pageSize}} rows <span class=caret></span></button><ul class=\"dropdown-menu pull-right\"><li ng-repeat=\"size in pagingOptions.pageSizes\" ng-click=\"pagingOptions.pageSize = size;\"><a href=#>{{size}} rows</a></li></ul></div></div><div class=col-xs-3><div class=qgrid-pager-container><span><span class=ngFooterTotalItems ng-class=\"{'ngNoMultiSelect': !multiSelect}\"><span class=qgrid-label>{{maxRows()}} rows total</span> <span ng-show=\"filterText.length > 0\" class=ngLabel>({{i18n.ngShowingItemsLabel}} {{totalFilteredItemsLength()}})</span></span> <span class=ngFooterSelectedItems ng-show=multiSelect><span class=qgrid-label>{{i18n.ngSelectedItemsLabel}} {{selectedItems.length}}</span></span></span> <span tooltip-placement=right tooltip=\"I spin when the grid is loading!\"><i class=\"qgrid-spinner fa fa-cog\" ng-class=\"{'fa-spin' : $parent.$parent.qgrid.qgridSettings.isLoading}\"></i></span></div></div></div></div>"
@@ -743,21 +761,6 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('src/templates/nggrid/qgrid-header-row-template.html',
     "<div ng-style=\"{ height: col.headerRowHeight }\" ng-repeat=\"col in renderedColumns\" ng-class=col.colIndex() class=ngHeaderCell><div ng-header-cell=\"\"></div></div>"
-  );
-
-
-  $templateCache.put('src/templates/nggrid/qgrid-pager-steppable.html',
-    "<ul class=\"pagination pagination-sm qgrid-pager\"><li><a href=# ng-click=pageToFirst() ng-disabled=cantPageBackward()><span class=\"glyphicon glyphicon-step-backward\"></span></a></li><li><a href=# ng-click=pageBackward() ng-disabled=cantPageBackward()><span class=\"glyphicon glyphicon-chevron-left\"></span></a></li><li ng-repeat=\"pageLink in pageLinks\" ng-show=!pageLink.hidden ng-class=\"{'active' : pageLink.active}\"><a href=# ng-click=setCurrentPage(pageLink.value)>{{pageLink.title}}</a></li><li><a href=# ng-click=pageForward() ng-disabled=cantPageForward()><span class=\"glyphicon glyphicon-chevron-right\"></span></a></li><li><a href=# ng-click=pageToLast() ng-disabled=cantPageToLast()><span class=\"glyphicon glyphicon-step-forward\"></span></a></li></ul>"
-  );
-
-
-  $templateCache.put('src/templates/nggrid/qgrid-searchtextbox-header-cell.html',
-    "<div class=\"ngHeaderSortColumn {{col.headerClass}} qgrid-header-cell\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !noSortVisible }\"><div ng-click=col.sort($event) ng-class=\"'colt' + col.index\" class=ngHeaderText>{{col.displayName}}</div><form class=\"bs-example bs-example-form\" role=form><span style=\"display:inline-block; padding: 0px 5px 0px 5px; width: 100%\"><div class=input-group style=\"width: 100%\"><input type=text class=form-control placeholder={{col.displayName}} ng-enter=$parent.qgrid.qgridSettings.performSearch() ng-model=col.colDef.qgridColumnSettings.searchValue></div></span></form><div class=ngSortButtonDown ng-show=col.showSortButtonDown()></div><div class=ngSortButtonUp ng-show=col.showSortButtonUp()></div><div class=ngSortPriority>{{col.sortPriority}}</div><div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=togglePin(col) ng-show=col.pinnable></div></div><div ng-show=col.resizable class=ngHeaderGrip ng-click=col.gripClick($event) ng-mousedown=col.gripOnMouseDown($event)></div>"
-  );
-
-
-  $templateCache.put('src/templates/nggrid/qgrid-typeahead-header-cell.html',
-    "<div class=\"ngHeaderSortColumn {{col.headerClass}} typeahead\" ng-style=\"{'cursor': col.cursor}\" ng-class=\"{ 'ngSorted': !noSortVisible }\"><div ng-click=col.sort($event) ng-class=\"'colt' + col.index\" class=ngHeaderText>{{col.displayName}}</div><span style=\"display:inline-block; padding: 0 5px 0 5px; width: 100%\"><input type=text ng-model=col.colDef.qgridColumnSettings.searchValue placeholder={{col.displayName}} ng-dblclick=openTypeAhead() qgrid-typeahead=\"address for address in $parent.qgrid.qgridSettings.autoComplete(col.colDef) | filter:$viewValue\" qrid-typeahead-editable=true qgrid-typeahead-loading=loadingLocations class=form-control ng-enter=$parent.qgrid.qgridSettings.performSearch()></span><div class=ngSortButtonDown ng-show=col.showSortButtonDown()></div><div class=ngSortButtonUp ng-show=col.showSortButtonUp()></div><div class=ngSortPriority>{{col.sortPriority}}</div><div ng-class=\"{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }\" ng-click=togglePin(col) ng-show=col.pinnable></div></div><div ng-show=col.resizable class=ngHeaderGrip ng-click=col.gripClick($event) ng-mousedown=col.gripOnMouseDown($event)></div>"
   );
 
 }]);

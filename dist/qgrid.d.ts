@@ -243,15 +243,18 @@ declare module qgrid {
     }
 }
 declare module qgrid {
-    class DateTimeCellFormater implements IQgridCellFormatter {
-        public format: string;
-        constructor(format?: string);
-        public template : string;
-    }
     class QGridHelper<T> {
         public gridModel: IQgridModel<T>;
         public data: T[];
         constructor(gridModel: IQgridModel<T>, $http: ng.IHttpService);
+    }
+}
+declare module qgrid {
+    class DateTimeCellFormatter implements IQgridCellFormatter {
+        private $templateCache;
+        static $inject: string[];
+        constructor($templateCache: ng.ITemplateCacheService);
+        public template : any;
     }
 }
 declare module qgrid {
@@ -296,8 +299,9 @@ declare module qgrid {
         private qgridDefaultQgridModel;
         private qgridDefaultQgridSettings;
         public qgridOperations: IQgridOperations;
+        private $templateCache;
         static $inject: string[];
-        constructor(qgridExtender: IQgridExtender, qgridDefaultQgridModel: IDefaultModelGetter, qgridDefaultQgridSettings: IDefaultModelGetter, qgridOperations: IQgridOperations);
+        constructor(qgridExtender: IQgridExtender, qgridDefaultQgridModel: IDefaultModelGetter, qgridDefaultQgridSettings: IDefaultModelGetter, qgridOperations: IQgridOperations, $templateCache: ng.ITemplateCacheService);
         public createGrid<T>($scope: IQgridScope<T>): void;
         private setupGrid<T>(userGridModel);
     }

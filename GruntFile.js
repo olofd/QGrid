@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                     'src/models/*.ts',
                     'src/directives/*.ts',
                     'src/controllers/*.ts',
-                    'src/services/*.ts',
+                    'src/services/**/*.ts',
                     'src/classes/*.ts'
                 ],
                 dest: 'dist/qgrid.js',
